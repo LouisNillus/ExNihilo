@@ -102,11 +102,9 @@ public class WavesCreator : EditorWindow
         
         #endregion
 
+
+
         if (profile == null) return;
-
-
-
-
 
 
         SerializedObject serializedObject = new SerializedObject(profile);
