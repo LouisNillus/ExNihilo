@@ -78,7 +78,7 @@ public class WavesCreator : EditorWindow
             }
             GUI.color = Color.white;
 
-            profileName = GUILayout.TextField(profileName, Style(GUI.skin.textField, TextAnchor.MiddleLeft), BoundsMin(100,40));
+            profileName = GUILayout.TextField(profileName, Style(GUI.skin.textField, TextAnchor.MiddleCenter), BoundsMin(100,40));
 
             GUILayout.BeginVertical();
 
