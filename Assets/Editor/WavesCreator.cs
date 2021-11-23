@@ -6,7 +6,7 @@ using UnityEditor;
 public class WavesCreator : EditorWindow
 {
 
-    private static WavesCreatorData profile;
+    private static WavesCreatorProfile profile;
     static string profileToLoad;
 
     [MenuItem("EX NIHILO/WavesCreator")]
@@ -19,7 +19,10 @@ public class WavesCreator : EditorWindow
 
     SerializedProperty second;
     SerializedProperty prefab;
+    SerializedProperty waves;
     bool loadNewProfile = true;
+
+    bool isLoadingProfile;
 
     string profileName = "";
 
@@ -43,19 +46,21 @@ public class WavesCreator : EditorWindow
 
             if (GUILayout.Button("Load Profile", Style(GUI.skin.button, fontStyle: FontStyle.Bold), BoundsMin(150, 40)))
             {
+                isLoadingProfile = true;
                 int controlID = EditorGUIUtility.GetControlID(FocusType.Passive);
-                EditorGUIUtility.ShowObjectPicker<WavesCreatorData>(null, false, "", controlID);
+                EditorGUIUtility.ShowObjectPicker<WavesCreatorProfile>(null, false, "", controlID);
             }
 
 
-            if (commandName == "ObjectSelectorUpdated")
+            if (commandName == "ObjectSelectorUpdated" && isLoadingProfile)
             {
-                profile = EditorGUIUtility.GetObjectPickerObject() as WavesCreatorData;
+                profile = EditorGUIUtility.GetObjectPickerObject() as WavesCreatorProfile;
                 Repaint();
             }
-            else if (commandName == "ObjectSelectorClosed")
+            else if (commandName == "ObjectSelectorClosed" && isLoadingProfile)
             {
-                profile = EditorGUIUtility.GetObjectPickerObject() as WavesCreatorData;
+                profile = EditorGUIUtility.GetObjectPickerObject() as WavesCreatorProfile;
+                isLoadingProfile = false;
             }
 
 
@@ -65,7 +70,7 @@ public class WavesCreator : EditorWindow
             if (GUILayout.Button("Create NEW Profile", Style(GUI.skin.button, fontStyle: FontStyle.Bold), BoundsMin(150, 40)))
             {
 
-                WavesCreatorData temp = CreateInstance<WavesCreatorData>();
+                WavesCreatorProfile temp = CreateInstance<WavesCreatorProfile>();
 
                 if (loadNewProfile)
                 {
@@ -120,6 +125,10 @@ public class WavesCreator : EditorWindow
         prefab = serializedObject.FindProperty("prefab");
         EditorGUILayout.PropertyField(prefab);
 
+        waves = serializedObject.FindProperty("waves");
+        EditorGUILayout.PropertyField(waves);
+
+
         serializedObject.ApplyModifiedProperties();
     }
 
@@ -128,11 +137,11 @@ public class WavesCreator : EditorWindow
     [InitializeOnLoadMethod]
     private static void OnLoad()
     {
-        profile = AssetDatabase.LoadAssetAtPath<WavesCreatorData>("Assets/"+ profileToLoad + ".asset");
+        profile = AssetDatabase.LoadAssetAtPath<WavesCreatorProfile>("Assets/"+ profileToLoad + ".asset");
 
         if (profile == null)
         {
-            profile = CreateInstance<WavesCreatorData>();
+            profile = CreateInstance<WavesCreatorProfile>();
             AssetDatabase.CreateAsset(profile, "Assets/WC-Profile.asset");
             AssetDatabase.Refresh();
         }
