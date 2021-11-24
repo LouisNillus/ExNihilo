@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be8f40b7929e94545bb27b00dba8d452, type: 3}
   m_Name: MyProfile
   m_EditorClassIdentifier: 
-  second: 9.94
+  second: 13.74
   prefab: {fileID: 0}
   waves:
   - {fileID: 0}
