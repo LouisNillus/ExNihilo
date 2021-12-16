@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be8f40b7929e94545bb27b00dba8d452, type: 3}
   m_Name: WC-Profile
   m_EditorClassIdentifier: 
-  second: 4.08
+  second: 0
   prefab: {fileID: 0}
   waves: []
